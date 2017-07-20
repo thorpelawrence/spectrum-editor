@@ -21,12 +21,12 @@ module.exports.edit = function () {
         localStorage.setItem('blur', this.value)
         ipcRenderer.send('settings-changed')
     })
-    document.getElementById('frame-height').value = localStorage.getItem('frame-height') || 0
+    document.getElementById('frame-height').value = localStorage.getItem('frame-height') || 60
     document.getElementById('frame-height').addEventListener('input', function () {
         localStorage.setItem('frame-height', this.value)
         ipcRenderer.send('settings-changed')
     })
-    document.getElementById('frame-width').value = localStorage.getItem('frame-width') || 0
+    document.getElementById('frame-width').value = localStorage.getItem('frame-width') || 3
     document.getElementById('frame-width').addEventListener('input', function () {
         localStorage.setItem('frame-width', this.value)
         ipcRenderer.send('settings-changed')
