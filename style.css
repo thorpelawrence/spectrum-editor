@@ -1,0 +1,248 @@
+:root {
+    --blur: 0.7px;
+    --titlebar-height: 30px;
+    --titlebar-button-width: 30px;
+    --frame-height: 60px;
+    --frame-width: 0px;
+    --editor-padding: 5px;
+    --black: #000000;
+    --blue: #0000D7;
+    --red: #D70000;
+    --magenta: #D700D7;
+    --green: #00D700;
+    --cyan: #00D7D7;
+    --yellow: #D7D700;
+    --white: #FFFFFF;
+    --grey: #D7D7D7;
+}
+
+body {
+    background-color: var(--black);
+    font-family: "ZX Spectrum", monospace;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#titlebar {
+    -webkit-app-region: drag;
+    user-select: none;
+    cursor: default;
+    height: var(--titlebar-height);
+    width: 100%;
+    background-color: var(--black);
+    color: var(--white);
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+/* #titlebar::before {
+    -webkit-app-region: no-drag;
+    content: " ";
+    height: 5px;
+    width: 100%;
+    position: absolute;
+} */
+
+#titlebar>#title {
+    left: var(--titlebar-button-width);
+    padding-left: 10px;
+    position: absolute;
+    line-height: var(--titlebar-height);
+}
+
+#titlebar>.titlebar-button {
+    width: var(--titlebar-button-width);
+    text-align: center;
+    position: absolute;
+    line-height: var(--titlebar-height);
+    -webkit-app-region: no-drag;
+}
+
+#titlebar>.titlebar-button:hover {
+    background-color: var(--red);
+}
+
+#titlebar-close-button {
+    right: 0;
+}
+
+#titlebar-maximize-button {
+    right: var(--titlebar-button-width);
+}
+
+#titlebar-minimize-button {
+    right: calc(var(--titlebar-button-width) + var(--titlebar-button-width));
+}
+
+#titlebar-menu-button {
+    transform: rotate(90deg);
+    letter-spacing: -10px;
+    left: 0;
+    text-align: left !important;
+}
+
+#frame-bottom {
+    height: var(--frame-height);
+    width: 100%;
+    background-color: var(--black);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+#frame-bottom>.rainbow {
+    background: -webkit-gradient(linear, left center, right center, from(#F24C3D), color-stop(24%, #F24C3D), color-stop(25%, #E6DF15), color-stop(49%, #E6DF15), color-stop(50%, #66DD23), color-stop(74%, #66DD23), color-stop(74%, #24F0FF), color-stop(100%, #24F0FF));
+    width: 60px;
+    height: 150px;
+    opacity: 1;
+    transform: rotate(25deg);
+    position: absolute;
+    bottom: -25px;
+    right: 10px;
+}
+
+#container {
+    margin-top: var(--titlebar-height);
+    height: calc(100vh - var(--titlebar-height) - var(--frame-height));
+    width: calc(100% - var(--frame-width) - var(--frame-width));
+    margin-left: var(--frame-width);
+}
+
+.monaco-editor .cursor {
+    animation: 0.7s blink step-end infinite;
+}
+
+.monaco-editor {
+    padding-top: var(--editor-padding);
+}
+
+.monaco-editor .vs, .monaco-editor .margin {
+    filter: blur(var(--blur));
+}
+
+#container[crt-flicker=true]::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: var(--titlebar-height);
+    left: var(--frame-width);
+    bottom: var(--frame-height);
+    right: var(--frame-width);
+    background: rgba(18, 16, 16, 0.1);
+    opacity: 0;
+    z-index: 2;
+    animation: flicker 0.15s infinite;
+    pointer-events: none;
+}
+
+#container[crt-grid=true]::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: var(--titlebar-height);
+    left: var(--frame-width);
+    bottom: var(--frame-height);
+    right: var(--frame-width);
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 2;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
+
+#container[crt-animations=true].turn-off>.monaco-editor {
+    animation: turn-off 0.55s cubic-bezier(0.23, 1, 0.32, 1);
+    animation-fill-mode: forwards;
+}
+
+#container[crt-animations=true].turn-on>.monaco-editor {
+    animation: turn-on 4s linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes flicker {
+    0% {
+        opacity: 0.8;
+    }
+    20% {
+        opacity: 0.71;
+    }
+    40% {
+        opacity: 0.83;
+    }
+    60% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 0.76;
+    }
+    100% {
+        opacity: 0.92;
+    }
+}
+
+@keyframes blink {
+    0% {
+        background-color: var(--blue);
+        color: var(--white);
+    }
+    50% {
+        background-color: var(--white);
+        color: var(--blue);
+    }
+}
+
+@keyframes turn-off {
+    0% {
+        transform: scale(1, 1.3) translate3d(0, 0, 0);
+        filter: brightness(1);
+        opacity: 1;
+    }
+    60% {
+        transform: scale(1.3, 0.001) translate3d(0, 0, 0);
+        filter: brightness(10);
+    }
+    100% {
+        animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+        transform: scale(0, 0.0001) translate3d(0, 0, 0);
+        filter: brightness(50);
+    }
+}
+
+@keyframes turn-on {
+    0% {
+        transform: scale(1, 0.8) translate3d(0, 0, 0);
+        filter: brightness(30);
+        opacity: 1;
+    }
+    3.5% {
+        transform: scale(1, 0.8) translate3d(0, 100%, 0);
+    }
+    3.6% {
+        transform: scale(1, 0.8) translate3d(0, -100%, 0);
+        opacity: 1;
+    }
+    9% {
+        transform: scale(1.3, 0.6) translate3d(0, 100%, 0);
+        filter: brightness(30);
+        opacity: 0;
+    }
+    11% {
+        transform: scale(1, 1) translate3d(0, 0, 0);
+        filter: brightness(0);
+        opacity: 0;
+    }
+    12% {
+        filter: brightness(0) blur(var(--blur));
+    }
+    99% {
+        filter: brightness(1) blur(var(--blur));
+    }
+    100% {
+        filter: blur(var(--blur));
+        opacity: initial;
+        transform: initial;
+    }
+}

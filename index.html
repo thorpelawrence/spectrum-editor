@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="resources/fonts/zxspectr.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="titlebar">
+        <div class="titlebar-button" id="titlebar-menu-button">
+            <span>|||</span>
+            <div id="titlebar-menu-dropdown"></div>
+        </div>
+        <div id="title">SPECTRUM EDITOR</div>
+        <div class="titlebar-button" id="titlebar-minimize-button">-</div>
+        <div class="titlebar-button" id="titlebar-maximize-button">[]</div>
+        <div class="titlebar-button" id="titlebar-close-button">X</div>
+    </div>
+    <div id="container"></div>
+    <div id="frame-bottom">
+        <div class="rainbow"></div>
+    </div>
+    <script>
+        require('./renderer')
+        require('./settings').load()
+    </script>
+</body>
+
+</html>

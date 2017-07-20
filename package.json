@@ -1,0 +1,39 @@
+{
+  "name": "spectrum-editor",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "author": "Lawrence Thorpe",
+  "license": "MIT",
+  "description": "ZX Spectrum style text editor",
+  "devDependencies": {
+    "electron": "^1.6.11",
+    "electron-builder": "^19.16.0"
+  },
+  "dependencies": {
+    "monaco-editor": "^0.9.0",
+    "monaco-loader": "^0.8.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thorpelawrence/spectrum-editor.git"
+  },
+  "keywords": [
+    "zx",
+    "spectrum",
+    "text",
+    "editor",
+    "electron",
+    "node",
+    "nodejs",
+    "js"
+  ],
+  "bugs": {
+    "url": "https://github.com/thorpelawrence/spectrum-editor/issues"
+  },
+  "homepage": "https://github.com/thorpelawrence/spectrum-editor#readme"
+}
