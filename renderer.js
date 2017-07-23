@@ -10,17 +10,27 @@ menu.append(new MenuItem({
     submenu: [
         {
             label: 'Open',
+            accelerator: 'CommandOrControl+O',
             click() {
                 let path = dialog.showOpenDialog(win) || []
                 path = path.length === 1 ? path[0] : null
                 win.webContents.send('open-file', path)
             }
         },
-        { label: 'Save', click() { win.webContents.send('save-file') } },
-        { label: 'Save As...', click() { win.webContents.send('save-file', true) } }
+        {
+            label: 'Save', accelerator: 'CommandOrControl+S',
+            click() { win.webContents.send('save-file') }
+        },
+        {
+            label: 'Save As...', accelerator: 'CommandOrControl+Shift+S',
+            click() { win.webContents.send('save-file', true) }
+        }
     ]
 }))
-menu.append(new MenuItem({ label: 'Settings', click() { ipcRenderer.send('open-settings') } }))
+menu.append(new MenuItem({
+    label: 'Settings', accelerator: 'CommandOrControl+,',
+    click() { ipcRenderer.send('open-settings') }
+}))
 menu.append(new MenuItem({
     label: 'About',
     click() {
@@ -30,11 +40,12 @@ menu.append(new MenuItem({
             message: "Spectrum Editor\
             \nCreated with Electron and NodeJS\
             \nBased on Monaco code editor\
-            \nLawrence Thorpe"
+            \n\nLawrence Thorpe"
         })
     }
 }))
-menu.append(new MenuItem({ role: 'quit' }))
+menu.append(new MenuItem({ role: 'quit', accelerator: 'CommandOrControl+Q' }))
+Menu.setApplicationMenu(menu)
 
 document.getElementById('titlebar-menu-button').addEventListener('click', (e) => {
     e.preventDefault()
