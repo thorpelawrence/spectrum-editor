@@ -86,23 +86,25 @@ loader().then((monaco) => {
 
     ipcRenderer.on('open-file', (e, path) => {
         if (path) {
-            if (monaco.editor.getModel(path)) {
-                editor.setModel(monaco.editor.getModel(path))
+            let uri = monaco.Uri.file(path)
+            if (monaco.editor.getModel(uri)) {
+                editor.setModel(monaco.editor.getModel(uri))
             }
             else {
                 fs.readFile(path, 'utf8', (err, data) => {
                     if (err) console.error(err)
-                    editor.setModel(monaco.editor.createModel(data, null, path))
+                    editor.setModel(monaco.editor.createModel(data, null, uri))
                 })
             }
         }
     })
 
     ipcRenderer.on('save-file', (e, saveAs) => {
-        let path = editor.getModel().uri
-        if (saveAs || typeof path !== "string") {
+        let uri = editor.getModel().uri
+        let path = uri.scheme !== "inmemory" ? uri.fsPath : null
+        if (saveAs || !path) {
             path = dialog.showSaveDialog(win, {
-                defaultPath: typeof path === "string" ? path : null
+                defaultPath: path
             })
         }
         if (path) {
