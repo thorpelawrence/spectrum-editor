@@ -1,0 +1,42 @@
+osx_image: xcode8.3
+
+dist: trusty
+sudo: false
+
+language: node_js
+node_js: "8"
+
+env:
+  global:
+    - ELECTRON_CACHE=$HOME/.cache/electron
+    - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
+
+os:
+  - linux
+  - osx
+
+cache:
+  directories:
+  - node_modules
+  - $HOME/.cache/electron
+  - $HOME/.cache/electron-builder
+  - $HOME/.npm/_prebuilds
+
+addons:
+  apt:
+    packages:
+      - libsecret-1-0
+
+before_install:
+  - curl -L https://yarnpkg.com/latest.tar.gz | tar xvz && mv dist $HOME/.yarn
+  - export PATH="$HOME/.yarn/bin:$PATH"
+
+install:
+- yarn
+
+script:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then yarn dist; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then yarn dist -- --mac --win; fi
+
+before_cache:
+  - rm -rf $HOME/.cache/electron-builder/wine
