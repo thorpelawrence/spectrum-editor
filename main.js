@@ -1,4 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
+const log = require('electron-log')
+const { autoUpdater } = require('electron-updater')
 
 let win
 
@@ -29,7 +31,26 @@ function createWindow() {
     })
 }
 
-app.on('ready', createWindow)
+log.info("App starting...")
+
+autoUpdater.logger = log
+autoUpdater.logger.transports.file.level = 'info'
+
+autoUpdater.on('download-progress', (progressObj) => {
+  let log_message = "Download speed: " + progressObj.bytesPerSecond;
+  log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+  log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+  sendStatusToWindow(log_message);
+})
+
+autoUpdater.on('update-downloaded', (info) => {
+    autoUpdater.quitAndInstall()
+})
+
+app.on('ready', () => {
+    createWindow()
+    autoUpdater.checkForUpdates()
+})
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
@@ -37,7 +58,7 @@ app.on('window-all-closed', () => {
     }
 })
 
-app.on('active', () => {
+app.on('activate', () => {
     if (win === null) {
         createWindow()
     }

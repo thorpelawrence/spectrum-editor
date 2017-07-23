@@ -2,7 +2,7 @@
 
 ![](resources/icon256.png)
 
-ZX Spectrum style text editor
+Text editor with ZX Spectrum theme
 
 Created with Electron and NodeJS  
 Based on Monaco Code Editor

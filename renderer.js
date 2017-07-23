@@ -86,15 +86,15 @@ loader().then((monaco) => {
 
     ipcRenderer.on('open-file', (e, path) => {
         if (path) {
-            fs.readFile(path, 'utf8', (err, data) => {
-                if (err) console.error(err)
-                if (monaco.editor.getModel(path)) {
-                    editor.setModel(monaco.editor.getModel(path))
-                }
-                else {
+            if (monaco.editor.getModel(path)) {
+                editor.setModel(monaco.editor.getModel(path))
+            }
+            else {
+                fs.readFile(path, 'utf8', (err, data) => {
+                    if (err) console.error(err)
                     editor.setModel(monaco.editor.createModel(data, null, path))
-                }
-            })
+                })
+            }
         }
     })
 

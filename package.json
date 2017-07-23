@@ -1,6 +1,6 @@
 {
   "name": "spectrum-editor",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -9,12 +9,14 @@
   },
   "author": "Lawrence Thorpe",
   "license": "MIT",
-  "description": "ZX Spectrum style text editor",
+  "description": "Text editor with ZX Spectrum theme",
   "devDependencies": {
     "electron": "^1.6.11",
     "electron-builder": "^19.16.0"
   },
   "dependencies": {
+    "electron-log": "^2.2.7",
+    "electron-updater": "^2.7.1",
     "monaco-editor": "^0.9.0",
     "monaco-loader": "^0.8.2"
   },
@@ -25,10 +27,16 @@
       "category": "public.app-category.developer-tools"
     },
     "linux": {
-      "target": [ "tar.gz", "AppImage" ]
+      "target": [
+        "tar.gz",
+        "AppImage"
+      ]
     },
     "win": {
-      "target": [ "nsis", "zip" ]
+      "target": [
+        "nsis",
+        "zip"
+      ]
     }
   },
   "repository": {
