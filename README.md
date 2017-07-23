@@ -4,7 +4,7 @@
 
 ZX Spectrum style text editor
 
-Created with Electron and NodeJS
+Created with Electron and NodeJS  
 Based on Monaco Code Editor
 
 ## Download
